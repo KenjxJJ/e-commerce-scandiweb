@@ -1,12 +1,13 @@
 /* ProductsList Page */
-.products-list-main {
+.products-list-main,
+.products-add-item {
     display: flex;
     margin: 15px auto 7.5px;
-    padding: 15px 25px 0px !important;
+    padding: 15px 2.5rem 0px !important;
     flex-flow: column nowrap;
 }
 
-.products-list-main  h1{
+.products-list-main h1 {
     font-weight: 500;
 }
 
@@ -35,8 +36,8 @@ a {
 /* Product Item */
 .product-list-items {
     display: flex;
-    border-top:  2px solid #333;
-    border-bottom:  2px solid #333;
+    border-top: 2px solid #333;
+    border-bottom: 2px solid #333;
     padding: 0.9rem 0rem 3rem;
     flex-wrap: wrap;
 
@@ -60,6 +61,51 @@ a {
     text-align: left;
 
 }
+
+
+
+/* Add Product Page */
+/*********************/
+/* Category Section */
+.item-description {
+    font-style: italic;
+    font-size: 0.67rem;
+}
+
+.add-product {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0.5rem;
+}
+
+#product_form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: auto;
+    max-width: 400px;
+}
+
+.general-product-details {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.general-product-details label {
+    flex: 1 1 100%;
+    display: flex;
+    padding: .5rem 0rem;
+    margin:  .5rem 0rem;
+}
+
+.general-product-details input {
+    margin-left: 1.5rem;
+    text-align: right;
+    width:  300px;
+    margin-left: auto;
+    justify-content: flex-end;
+}
+
 
 /* Footer Page */
 
