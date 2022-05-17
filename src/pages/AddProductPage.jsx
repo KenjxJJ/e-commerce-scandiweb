@@ -8,8 +8,10 @@ const CategoryDetailSection = ({ selectedItem }) => {
       <div className="category-item">
         {selectedItem.options.map((item) => (
           <div key={item.id}>
-            <label htmlFor={item.id}>{item.label}</label>
-            <input id={item.id} type={item.type} />
+            <label htmlFor={item.id}>
+              {item.label}
+              <input id={item.id} type={item.type} />
+            </label>
           </div>
         ))}
         <span className="item-description">* {selectedItem.description}</span>
@@ -26,14 +28,12 @@ const AddProductPage = () => {
         id: "size",
         label: "Size (MB)",
         type: "text",
-        
       },
     ],
-    description : "Please describe the size."
+    description: "Please describe the size.",
   });
 
   const changeProductType = (type) => {
-    
     // OPTIONS
     const category_detail = [
       {
@@ -45,7 +45,7 @@ const AddProductPage = () => {
             type: "text",
           },
         ],
-        description : "Please, provide size."
+        description: "Please, provide size.",
       },
       {
         name: "Furniture",
@@ -54,66 +54,74 @@ const AddProductPage = () => {
           { label: "Width (CM)", type: "number" },
           { label: "Length (CM)", type: "number" },
         ],
-        description : "Please describe the dimensions in HxWxL Format."
+        description: "Please describe the dimensions in HxWxL Format.",
       },
       {
         name: "Book",
         options: [{ label: "Weight (KG)", id: "book", type: "number" }],
-        description : "Please, provide weight."
+        description: "Please, provide weight.",
       },
     ];
 
-    const selectedItem = category_detail.find((arrValue) => arrValue.name === type && type !== "Select the product type");
+    const selectedItem = category_detail.find(
+      (arrValue) => arrValue.name === type && type !== "Select the product type"
+    );
     setSelection(selectedItem);
   };
 
   return (
-    <main className="products-list-main">
+    <main className="product-add-item">
       <header>
         <div>
           <h1>Add Product</h1>
         </div>
         <div>
-          <button id="add-product">
-            <Link to="/add-product" className="add-product-link">
+          <button type="submit">
+            <Link to="/">
               Save
             </Link>
           </button>
-          <button id="delete-product-btn">Cancel</button>
+          <button>
+            <Link to="/">
+              Cancel
+            </Link>
+          </button>
         </div>
       </header>
 
       <div className="add-product">
-        <form id="product_form" action="create.php">
+        <form id="product_form" validate action="create.php">
           <section className="general-product-details">
-            <label htmlFor="sku">SKU
-            <input id="sku" name="sku" type="text" />
+            <label htmlFor="sku">
+              SKU
+              <input id="sku" name="sku" type="text" required="true"/>
             </label>
-            <label htmlFor="name">Name
-            <input name="name" id="name" type="text" />
+            <label htmlFor="name">
+              Name
+              <input name="name" id="name" type="text" />
             </label>
 
-            <label htmlFor="price">Price ($) 
-            <input id="price" name="price" type="text" />
+            <label htmlFor="price">
+              Price ($)
+              <input id="price" name="price" type="text" />
             </label>
-          
           </section>
 
           <section className="product-type-section">
             <label htmlFor="productType" name="product-type">
               Type Switcher
+              <select
+                id="productType"
+                onChange={(e) => changeProductType(e.target.value)}
+              >
+                <option value="DVD">DVD</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Book">Book</option>
+              </select>
             </label>
-            <select id="productType" onChange={(e)=>changeProductType(e.target.value)}>
-               <option value="DVD">
-                DVD
-              </option>
-              <option value="Furniture">Furniture</option>
-              <option value="Book">Book</option>
-            </select>
 
             {/* Display Selected Option */}
             <CategoryDetailSection selectedItem={selection} />
-
           </section>
         </form>
       </div>

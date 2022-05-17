@@ -1,7 +1,8 @@
 /* ProductsList Page */
 .products-list-main,
-.products-add-item {
+.product-add-item {
     display: flex;
+    min-height: 70vh;
     margin: 15px auto 7.5px;
     padding: 15px 2.5rem 0px !important;
     flex-flow: column nowrap;
@@ -15,7 +16,8 @@
     flex: 1 1 100%;
 }
 
-.products-list-main header {
+.products-list-main header,
+.product-add-item header {
     display: flex;
     min-height: 30px;
     flex-direction: row;
@@ -69,13 +71,16 @@ a {
 /* Category Section */
 .item-description {
     font-style: italic;
-    font-size: 0.67rem;
+    font-size: 1rem;
+    font-weight: 300;
 }
 
 .add-product {
     display: flex;
+    border-top: 2px solid #333;
+    border-bottom: 2px solid #333;
+    padding: 0.5rem 0.5rem 4rem;
     justify-content: flex-start;
-    padding: 0.5rem;
 }
 
 #product_form {
@@ -91,24 +96,35 @@ a {
     flex-wrap: wrap;
 }
 
-.general-product-details label {
+.general-product-details label,
+.product-type-section label,
+.category-item label {
     flex: 1 1 100%;
     display: flex;
+    font-weight: 500;
     padding: .5rem 0rem;
-    margin:  .5rem 0rem;
+    margin: .5rem 0rem;
 }
 
-.general-product-details input {
+.general-product-details input,
+.category-item input {
     margin-left: 1.5rem;
     text-align: right;
-    width:  300px;
+    width: 300px;
     margin-left: auto;
     justify-content: flex-end;
 }
 
+select {
+    width: 5.5rem;
+    margin-left: 1rem;
+}
+
+.category-item{
+    height: 9.5rem;
+}
 
 /* Footer Page */
-
 .footer {
     display: flex;
     justify-content: center;
