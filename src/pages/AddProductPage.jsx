@@ -1,33 +1,53 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Controller, useForm } from "react-hook-form";
 
 // Category Selected Section
-const CategoryDetailSection = ({ selectedItem }) => {
+const CategoryDetailSection = ({ selectedItem, register, errors }) => {
+  // let label = selectedItem.name;
+  // let attribute = selectedItem.attribute;
+
   return (
     <>
       <div className="category-item">
-        {selectedItem.options.map((item) => (
-          <div key={item.id}>
+        {selectedItem.options.map((item, index) => (
+          <div key={index}>
             <label htmlFor={item.id}>
               {item.label}
-              <input id={item.id} type={item.type} />
+              <input
+                id={item.id}
+                type={item.type}
+                {...register(`${item.label}`, {
+                  required: true,
+                })}
+              />
+              {errors[item.label] && (
+                <span className="text-error" style={{display: "block"}}>Please, provide the data of indicated type</span>
+              )}
             </label>
           </div>
         ))}
-        <span className="item-description">* {selectedItem.description}</span>
+        {<span className="item-description">* {selectedItem.description}</span>}
       </div>
     </>
   );
 };
 
 const AddProductPage = () => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
+
   const [selection, setSelection] = useState({
     name: "DVD",
     options: [
       {
         id: "size",
         label: "Size (MB)",
-        type: "text",
+        type: "number",
       },
     ],
     description: "Please describe the size.",
@@ -42,7 +62,7 @@ const AddProductPage = () => {
           {
             id: "size",
             label: "Size (MB)",
-            type: "text",
+            type: "number",
           },
         ],
         description: "Please, provide size.",
@@ -64,68 +84,142 @@ const AddProductPage = () => {
     ];
 
     const selectedItem = category_detail.find(
-      (arrValue) => arrValue.name === type && type !== "Select the product type"
+      (arrValue) => arrValue.name === type
     );
+
     setSelection(selectedItem);
   };
 
+  // Select Component
+  const Select = React.forwardRef(({ label }, ref) => (
+    <>
+      <label htmlFor="productType" name="product-type">
+        {label}
+        <select
+          ref={ref}
+          id="productType"
+          onChange={(e) => changeProductType(e.target.value)}
+        >
+          <option value="DVD">DVD</option>
+          <option value="Furniture">Furniture</option>
+          <option value="Book">Book</option>
+        </select>
+      </label>
+    </>
+  ));
+
+  // Submit function
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
-    <main className="product-add-item">
-      <header>
-        <div>
-          <h1>Add Product</h1>
+    <>
+      <main className="product-add-item">
+        <header>
+          <div>
+            <h1>Add Product</h1>
+          </div>
+        </header>
+        <div className="add-product">
+          <form
+            id="product_form"
+            onSubmit={handleSubmit(onSubmit)}
+            action="create.php"
+          >
+            <section className="general-product-details">
+              <label htmlFor="sku">
+                SKU
+                <input
+                  id="sku"
+                  name="sku"
+                  type="text"
+                  {...register("sku", {
+                    required: true,
+                    pattern: /[A-Z].[0-9]./,
+                    maxLength: 10,
+                  })}
+                />
+              </label>
+              {errors.sku && <p className="text-error">Please check the SKU</p>}
+
+              <label htmlFor="name">
+                Name
+                <input
+                  name="name"
+                  id="name"
+                  type="text"
+                  {...register("name", {
+                    required: true,
+                    maxLength: 10,
+                  })}
+                />
+              </label>
+              {errors.name && (
+                <p className="text-error">Please check the name</p>
+              )}
+
+              <label htmlFor="price">
+                Price ($)
+                <input
+                  id="price"
+                  name="price"
+                  type="number"
+                  {...register("price", {
+                    required: true,
+                    maxLength: 10,
+                  })}
+                />
+              </label>
+              {errors.price && (
+                <p className="text-error">Please check the price</p>
+              )}
+            </section>
+
+            <section className="product-type-section">
+              {/* <Controller
+                name="category"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    label={"Type Switcher"}
+                    {...register("category")}
+                  />
+                )}
+              /> */}
+              <label htmlFor="productType" name="product-type">
+                Type Switcher
+                <select
+                  id="productType"
+                  onChange={(e) => changeProductType(e.target.value)}
+                >
+                  <option value="DVD">DVD</option>
+                  <option value="Furniture">Furniture</option>
+                  <option value="Book">Book</option>
+                </select>
+              </label>
+
+              {/* Display Selected Option */}
+              <CategoryDetailSection
+                selectedItem={selection}
+                register={register}
+                errors={errors}
+              />
+            </section>
+
+            {/* Submit / Cancel Buttons */}
+            <div>
+              <button type="submit">Save</button>
+              <button>
+                <Link to="/">Cancel</Link>
+              </button>
+            </div>
+          </form>
         </div>
-        <div>
-          <button type="submit">
-            <Link to="/">
-              Save
-            </Link>
-          </button>
-          <button>
-            <Link to="/">
-              Cancel
-            </Link>
-          </button>
-        </div>
-      </header>
-
-      <div className="add-product">
-        <form id="product_form" validate action="create.php">
-          <section className="general-product-details">
-            <label htmlFor="sku">
-              SKU
-              <input id="sku" name="sku" type="text" required="true"/>
-            </label>
-            <label htmlFor="name">
-              Name
-              <input name="name" id="name" type="text" />
-            </label>
-
-            <label htmlFor="price">
-              Price ($)
-              <input id="price" name="price" type="text" />
-            </label>
-          </section>
-
-          <section className="product-type-section">
-            <label htmlFor="productType" name="product-type">
-              Type Switcher
-              <select
-                id="productType"
-                onChange={(e) => changeProductType(e.target.value)}
-              >
-                <option value="DVD">DVD</option>
-                <option value="Furniture">Furniture</option>
-                <option value="Book">Book</option>
-              </select>
-            </label>
-
-            {/* Display Selected Option */}
-            <CategoryDetailSection selectedItem={selection} />
-          </section>
-        </form>
-      </div>
-    </main>
+      </main>
+    </>
   );
 };
 export default AddProductPage;

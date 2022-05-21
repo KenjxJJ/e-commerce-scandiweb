@@ -69,7 +69,8 @@ a {
 /* Add Product Page */
 /*********************/
 /* Category Section */
-.item-description {
+.item-description,
+.text-error {
     font-style: italic;
     font-size: 1rem;
     font-weight: 300;
@@ -120,8 +121,17 @@ select {
     margin-left: 1rem;
 }
 
-.category-item{
-    height: 9.5rem;
+.category-item {
+    height: 10.5rem;
+}
+
+/* Validation */
+.text-error {
+    color: red;
+    font-size: 0.9rem;
+    font-style: italic;
+    opacity: 0.9;
+    
 }
 
 /* Footer Page */

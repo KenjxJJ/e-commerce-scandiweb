@@ -26,7 +26,9 @@ const ProductsListPage = () => {
           </div>
           <div>
             <button id="add-product">
-              <Link to="/add-product" className="add-product-link">ADD</Link>
+              <Link to="/add-product" className="add-product-link">
+                ADD
+              </Link>
             </button>
             <button id="delete-product-btn">MASS DELETE</button>
           </div>
@@ -34,7 +36,7 @@ const ProductsListPage = () => {
 
         <div className="product-list-items">
           {data.map((product) => (
-            <section className="product-list-item" key={product.id}>
+            <section className="product-list-item" key={product.product_id}>
               <span>
                 <input
                   type="checkbox"
@@ -42,10 +44,12 @@ const ProductsListPage = () => {
                   className="delete-checkbox"
                 />
               </span>
-              <span> SKU </span>
-              <span>{product.name}</span>
-              <span>{product.price} $</span>
-              <span>Category: {product.price}</span>
+              <span> {product.product_sku} </span>
+              <span>{product.product_name}</span>
+              <span>{product.product_price} $</span>
+              <span>
+                {product.category_name}: {product.category_value}
+              </span>
             </section>
           ))}
         </div>
