@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 // Category Selected Section
 const CategoryDetailSection = ({ selectedItem, register, errors }) => {
-  // let label = selectedItem.name;
   // let attribute = selectedItem.attribute;
 
   return (
@@ -37,7 +36,6 @@ const AddProductPage = () => {
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
   } = useForm();
 
@@ -89,24 +87,6 @@ const AddProductPage = () => {
 
     setSelection(selectedItem);
   };
-
-  // Select Component
-  const Select = React.forwardRef(({ label }, ref) => (
-    <>
-      <label htmlFor="productType" name="product-type">
-        {label}
-        <select
-          ref={ref}
-          id="productType"
-          onChange={(e) => changeProductType(e.target.value)}
-        >
-          <option value="DVD">DVD</option>
-          <option value="Furniture">Furniture</option>
-          <option value="Book">Book</option>
-        </select>
-      </label>
-    </>
-  ));
 
   // Submit function
   const onSubmit = (data) => {
@@ -177,18 +157,6 @@ const AddProductPage = () => {
             </section>
 
             <section className="product-type-section">
-              {/* <Controller
-                name="category"
-                control={control}
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    label={"Type Switcher"}
-                    {...register("category")}
-                  />
-                )}
-              /> */}
               <label htmlFor="productType" name="product-type">
                 Type Switcher
                 <select
