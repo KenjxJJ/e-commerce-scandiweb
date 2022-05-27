@@ -15,6 +15,7 @@ const AddProductPage = () => {
     name: "DVD",
     attributes: {
       id: "size",
+      units: "MB",
       options: [{ label: "Size (MB)", type: "number" }],
     },
     description: "Please, provide size.",
@@ -28,6 +29,7 @@ const AddProductPage = () => {
         name: "DVD",
         attributes: {
           id: "size",
+          units: "MB",
           options: [{ label: "Size (MB)", type: "number" }],
         },
 
@@ -37,6 +39,7 @@ const AddProductPage = () => {
         name: "Furniture",
         attributes: {
           id: "dimensions",
+          units: "CM",
           options: [
             { label: "Height (CM)", type: "number" },
             { label: "Width (CM)", type: "number" },
@@ -49,6 +52,7 @@ const AddProductPage = () => {
         name: "Book",
         attributes: {
           id: " weight",
+          units: "KG",
           options: [{ label: "Weight (KG)", type: "number" }],
         },
         description: "Please, provide weight.",
@@ -69,7 +73,7 @@ const AddProductPage = () => {
   const onSubmit = (data) => {
     const attrib = selection.attributes.id;
 
-    const saveItem = { [attrib] : data.label, ...data };
+    const saveItem = { attrib, ...data };
 
     console.log(saveItem);
   };
