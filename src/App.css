@@ -130,8 +130,10 @@ select {
     color: red;
     font-size: 0.9rem;
     font-style: italic;
+    margin-top: -0.2rem;
     opacity: 0.9;
-    
+    flex: 1 1 100%;
+
 }
 
 /* Footer Page */
