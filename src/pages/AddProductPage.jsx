@@ -120,8 +120,7 @@ const AddProductPage = () => {
                   type="text"
                   {...register("name", {
                     required: true,
-                    pattern: /[A-Za-z]./,
-                    maxLength: 10,
+                    pattern: /^([a-zA-Z]+ )+[a-zA-Z]+$|^[A-Za-z]+$/,
                   })}
                 />
               </label>
