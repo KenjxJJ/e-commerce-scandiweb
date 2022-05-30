@@ -189,7 +189,7 @@ const AddProductPage = () => {
             </section>
 
             {/* Submit / Cancel Buttons */}
-            <div>
+            <div className="action-btn">
               <button type="submit">Save</button>
               <button type="cancel">
                 <Link to="/">Cancel</Link>
