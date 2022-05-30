@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import CategoryDetailSection from "../comp/CategorySelection";
+import productService from "../service/productService";
 
 const AddProductPage = () => {
   const {
@@ -10,6 +11,10 @@ const AddProductPage = () => {
     unregister,
     formState: { errors },
   } = useForm();
+
+  // Route to the home page
+  let navigate = useNavigate();
+  const [isSent, setIsSent] = useState(false);
 
   const [selection, setSelection] = useState({
     name: "DVD",
@@ -76,6 +81,21 @@ const AddProductPage = () => {
     const saveItem = { attrib, ...data };
 
     console.log(saveItem);
+
+    productService
+      .saveProduct(JSON.stringify(saveItem))
+      .then((res) => {
+        console.log( "Sent Data", res);
+        setIsSent(true);
+      })
+      .catch((err) => {
+        console.log("AXIOS ERROR: ", err);
+      });
+
+    if (isSent) {
+      // Route to home page
+      navigate("/");
+    }
   };
 
   return (
@@ -91,7 +111,8 @@ const AddProductPage = () => {
           <form
             id="product_form"
             onSubmit={handleSubmit(onSubmit)}
-            action="create.php"
+            action="/create.php"
+            method="POST"
           >
             {/* Product SKU Input */}
             <section className="general-product-details">
@@ -170,7 +191,7 @@ const AddProductPage = () => {
             {/* Submit / Cancel Buttons */}
             <div>
               <button type="submit">Save</button>
-              <button>
+              <button type="cancel">
                 <Link to="/">Cancel</Link>
               </button>
             </div>
