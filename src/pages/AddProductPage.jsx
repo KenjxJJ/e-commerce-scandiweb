@@ -21,7 +21,7 @@ const AddProductPage = () => {
     attributes: {
       id: "size",
       units: "MB",
-      options: [{ label: "Size (MB)", type: "number" }],
+      options: [{ label: "size", type: "number", unit: "MB" }],
     },
     description: "Please, provide size.",
   });
@@ -35,7 +35,7 @@ const AddProductPage = () => {
         attributes: {
           id: "size",
           units: "MB",
-          options: [{ label: "Size (MB)", type: "number" }],
+          options: [{ label: "size", type: "number", unit: "MB" }],
         },
 
         description: "Please, provide size.",
@@ -46,9 +46,9 @@ const AddProductPage = () => {
           id: "dimensions",
           units: "CM",
           options: [
-            { label: "Height (CM)", type: "number" },
-            { label: "Width (CM)", type: "number" },
-            { label: "Length (CM)", type: "number" },
+            { label: "height", type: "number", unit: "CM" },
+            { label: "width", type: "number", unit: "CM" },
+            { label: "length", type: "number", unit: "CM" },
           ],
         },
         description: "Please describe the dimensions in HxWxL Format.",
@@ -58,7 +58,7 @@ const AddProductPage = () => {
         attributes: {
           id: " weight",
           units: "KG",
-          options: [{ label: "Weight (KG)", type: "number" }],
+          options: [{ label: "Weight", type: "number", unit: "KG" }],
         },
         description: "Please, provide weight.",
       },
@@ -76,16 +76,16 @@ const AddProductPage = () => {
 
   // Submit function
   const onSubmit = (data) => {
-    const attrib = selection.attributes.id;
+    const attributes = selection.attributes.id;
 
-    const saveItem = { attrib, ...data };
+    const saveItem = { attributes, ...data };
 
     console.log(saveItem);
 
     productService
       .saveProduct(JSON.stringify(saveItem))
       .then((res) => {
-        console.log( "Sent Data", res);
+        console.log("Sent Data", res);
         setIsSent(true);
       })
       .catch((err) => {
@@ -159,6 +159,7 @@ const AddProductPage = () => {
                   {...register("price", {
                     required: true,
                     maxLength: 10,
+                    min: 0,
                   })}
                 />
               </label>

@@ -11,14 +11,15 @@ const CategoryDetailSection = ({ selectedItem, register, errors, show }) => {
         {selectedItem.attributes.options.map((item, index) => (
           <div key={index}>
             <label htmlFor={item.id}>
-              {item.label}
+              {item.label} ({item.unit})
               <input
-                id={item.id}
-                defaultValue={""}
+                id={item.label}
+                defaultValue={" "}
                 type={item.type}
                 ref={_input}
                 {...register(`${item.label}`, {
                   required: true,
+                  min : 0
                 })}
               />
             </label>

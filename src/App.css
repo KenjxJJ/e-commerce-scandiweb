@@ -12,9 +12,9 @@
     font-weight: 500;
 }
 
-.products-list-main>* {
+/* .products-list-main>* {
     flex: 1 1 100%;
-}
+} */
 
 .products-list-main header,
 .product-add-item header {
@@ -38,6 +38,7 @@ a {
 /* Product Item */
 .product-list-items {
     display: flex;
+    min-height:  50vh;
     border-top: 2px solid #333;
     border-bottom: 2px solid #333;
     padding: 0.9rem 0rem 3rem;
@@ -110,6 +111,7 @@ a {
 .category-item label {
     flex: 1 1 100%;
     display: flex;
+    text-transform: capitalize;
     font-weight: 500;
     padding: .5rem 0rem;
     margin: .5rem 0rem;
