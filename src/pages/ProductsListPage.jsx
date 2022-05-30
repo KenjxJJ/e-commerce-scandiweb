@@ -6,46 +6,47 @@ const ProductsListPage = () => {
   const [data, setData] = useState([]);
 
   // Track the checked items
-  const [isChecked, setIsChecked] = useState(false);
-  const [checkedItemsById , setCheckedItemsById] = useState([]);
+  const [checkedItemsById, setCheckedItemsById] = useState([]);
 
   // handle checked state
-  const handleCheckedBoxChange = (e)=>{
-    // Check value by capture..
-    console.log(e.target.value);
-    console.log(e.target.checked);
+  const handleCheckedBoxChange = (e, id) => {
 
-    setIsChecked(!isChecked);
-    console.log("isChecked?", isChecked);
-    // TODO: Record item by id  function or statement
+    // Record product ids to delete to store on true,
+    //  or remove from the store if false 
+    if (e.target.checked) {
+      setCheckedItemsById([...checkedItemsById, id]);
+    } else {
+      const remainingCheckedItems = checkedItemsById.filter(
+        (idValue) => idValue !== id
+      );
+      setCheckedItemsById(remainingCheckedItems);
+    }
+  };
 
+  const massDeleteSelectedItems = () => {
+    // Remove selected items
+    const remainingData = data.filter((d, index) => {
+      return d.product_id !== checkedItemsById[index];
+    });
 
-  }
+    // Set it to product data state
+    setData(remainingData);
 
-  const getCheckedBoxes = ()=>{
-
-      // Obtain all checked Boxes - array collection or filtered map?? 
-  }
-
-  const massDeleteFunction = ()=>{
-    // Fetch all checked boxes
-    getCheckedBoxes();
-
-    // Print items to delete by Id..
-    console.log("Items to delete", [...checkedItemsById]);
-  }
+    // Update to the database so that on the next state is new replaced data
+    productService.deleteProductsByIds(checkedItemsById);
+  };
 
   useEffect(() => {
-    return () => {
-      productService
-        .getProducts()
-        .then((res) => {
-          const { data } = res; // Obtain data for response
-          setData(data);
-        })
-        .catch((error) => console.log(error));
-    };
-  }, []);
+    // Fetch data from database via a service
+    productService
+      .getProducts()
+      .then((res) => {
+        const { data } = res; // Obtain data for response
+        setData(data);
+      })
+      .catch((error) => console.log(error));
+    
+  }, [checkedItemsById]);
 
   return (
     <>
@@ -60,7 +61,9 @@ const ProductsListPage = () => {
                 ADD
               </Link>
             </button>
-            <button id="delete-product-btn">MASS DELETE</button>
+            <button id="delete-product-btn" onClick={massDeleteSelectedItems}>
+              MASS DELETE
+            </button>
           </div>
         </header>
 
@@ -70,7 +73,9 @@ const ProductsListPage = () => {
               <span>
                 <input
                   type="checkbox"
-                  onChange={(e)=>handleCheckedBoxChange(e)}
+                  onChange={(e) => {
+                    handleCheckedBoxChange(e, product.product_id);
+                  }}
                   name="product-item-checkbox"
                   className="delete-checkbox"
                 />
