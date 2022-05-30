@@ -5,6 +5,36 @@ import { Link } from "react-router-dom";
 const ProductsListPage = () => {
   const [data, setData] = useState([]);
 
+  // Track the checked items
+  const [isChecked, setIsChecked] = useState(false);
+  const [checkedItemsById , setCheckedItemsById] = useState([]);
+
+  // handle checked state
+  const handleCheckedBoxChange = (e)=>{
+    // Check value by capture..
+    console.log(e.target.value);
+    console.log(e.target.checked);
+
+    setIsChecked(!isChecked);
+    console.log("isChecked?", isChecked);
+    // TODO: Record item by id  function or statement
+
+
+  }
+
+  const getCheckedBoxes = ()=>{
+
+      // Obtain all checked Boxes - array collection or filtered map?? 
+  }
+
+  const massDeleteFunction = ()=>{
+    // Fetch all checked boxes
+    getCheckedBoxes();
+
+    // Print items to delete by Id..
+    console.log("Items to delete", [...checkedItemsById]);
+  }
+
   useEffect(() => {
     return () => {
       productService
@@ -40,6 +70,7 @@ const ProductsListPage = () => {
               <span>
                 <input
                   type="checkbox"
+                  onChange={(e)=>handleCheckedBoxChange(e)}
                   name="product-item-checkbox"
                   className="delete-checkbox"
                 />
