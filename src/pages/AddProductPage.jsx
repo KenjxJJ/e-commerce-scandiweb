@@ -58,7 +58,7 @@ const AddProductPage = () => {
         attributes: {
           id: " weight",
           units: "KG",
-          options: [{ label: "Weight", type: "number", unit: "KG" }],
+          options: [{ label: "weight", type: "number", unit: "KG" }],
         },
         description: "Please, provide weight.",
       },
